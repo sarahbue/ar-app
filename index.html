@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AR App</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <style>
+    .arjs-loader {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .arjs-loader div {
+      text-align: center;
+      font-size: 1.25em;
+      color: white;
+    }
+
+    .info-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      box-sizing: border-box;
+      color: white;
+      text-align: center;
+    }
+  </style>
+</head>
+<body style="margin: 0px; overflow: hidden;">
+  <!-- minimal loader shown until image descriptors are loaded -->
+  <div class="arjs-loader">
+    <div>Loading, please wait...</div>
+  </div>
+  <a-scene embedded arjs="sourceType: webcam;">
+    <a-nft type="nft" url="./Freske" id="nftMarker">
+      <!-- Leerer Marker, der nur zur Erkennung dient -->
+    </a-nft>
+    <a-entity camera></a-entity>
+
+    <!-- Bild im oberen 3/4 des Bildschirms -->
+    <a-image id="overlayImage" src="./Bild.jpg" position="0 2 -5" width="4" height="3" visible="false"></a-image>
+    <!-- Text im unteren 1/4 des Bildschirms -->
+    <a-entity id="infoContainer" position="0 -1.5 -5" visible="false">
+      <a-text value="Unter dem Bild\nHier kannst du deinen Text einfügen." align="center" color="#FFFFFF" width="4"></a-text>
+    </a-entity>
+  </a-scene>
+
+
+
+  <script>
+    document.getElementById('hiroMarker').addEventListener('markerFound', function() {
+      var overlayImage = document.getElementById('overlayImage');
+      var infoContainer = document.getElementById('infoContainer');
+
+      // Set the visibility to true
+      overlayImage.setAttribute('visible', 'true');
+      infoContainer.setAttribute('visible', 'true');
+      
+      // Remove the marker found listener to ensure it stays visible
+      this.removeEventListener('markerFound', arguments.callee);
+    });
+  </script>
+</body>
+</html>
