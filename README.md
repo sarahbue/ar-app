@@ -1,2 +1,2 @@
-# ar-app-mustair
+# ar-app
 webbased AR-Application
